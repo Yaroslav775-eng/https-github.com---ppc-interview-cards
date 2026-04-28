@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PPC Interview Cards</title>
+  <style>
+    :root {
+      --bg: #f4f7f5;
+      --ink: #17211b;
+      --muted: #617068;
+      --line: #d9e1dc;
+      --card: #ffffff;
+      --accent: #0f7b63;
+      --accent-soft: #dff3ed;
+      --warn: #946b17;
+      --warn-soft: #fff2cc;
+      --shadow: 0 16px 38px rgba(23, 33, 27, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(15, 123, 99, 0.13), transparent 32rem),
+        linear-gradient(180deg, #fbfcfb 0%, var(--bg) 100%);
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1120px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 44px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 14px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(15, 123, 99, 0.16);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn {
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .btn:focus-visible,
+    .card:focus-visible {
+      outline: 3px solid rgba(15, 123, 99, 0.32);
+      outline-offset: 2px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .stat {
+      min-height: 88px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .card {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0;
+      text-align: left;
+      background: var(--card);
+      box-shadow: 0 8px 24px rgba(23, 33, 27, 0.07);
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .voice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .speak-btn {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      color: var(--ink);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .speak-btn.primary {
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+
+    .speak-btn.stop {
+      color: #8a3e17;
+      border-color: #efc7b6;
+      background: #fff5ef;
+    }
+
+    .card.is-open {
+      box-shadow: var(--shadow);
+      border-color: rgba(15, 123, 99, 0.5);
+    }
+
+    .card-top {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      padding: 0 9px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 700;
+    }
+
+    .question {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .pronunciation,
+    .translation {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .translation strong,
+    .pronunciation strong {
+      color: var(--ink);
+    }
+
+    .answer {
+      display: none;
+      border-top: 1px solid var(--line);
+      padding: 18px;
+      background: #fbfdfc;
+    }
+
+    .card.is-open .answer {
+      display: grid;
+      gap: 14px;
+    }
+
+    .answer h2 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.25;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .answer p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .keywords {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .keywords li {
+      border: 1px solid #ead69d;
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: var(--warn);
+      background: var(--warn-soft);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .empty {
+      display: none;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      background: #fff;
+    }
+
+    .empty.is-visible {
+      display: block;
+    }
+
+    @media (min-width: 720px) {
+      .toolbar {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+
+      .stats {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>PPC Interview Cards</h1>
+      <p class="intro">Tap a card to see the answer, pronunciation, translation, and keywords you can keep on screen.</p>
+    </header>
+
+    <section class="stats" aria-label="Key results">
+      <div class="stat"><strong>10+ years</strong><span>digital marketing experience</span></div>
+      <div class="stat"><strong>$50k+</strong><span>monthly ad budgets managed</span></div>
+      <div class="stat"><strong>50+ projects</strong><span>different niches and business models</span></div>
+      <div class="stat"><strong>800-1200%</strong><span>ROAS in pet supplies case</span></div>
+    </section>
+
+    <section class="toolbar" aria-label="Card controls">
+      <input class="search" id="search" type="search" placeholder="Search cards..." autocomplete="off">
+      <div class="actions">
+        <button class="btn primary" id="openAll" type="button">Open all</button>
+        <button class="btn" id="closeAll" type="button">Close all</button>
+      </div>
+    </section>
+
+    <section class="cards" id="cards" aria-label="Interview cards"></section>
+    <p class="empty" id="empty">No cards found.</p>
+  </main>
+
+  <script>
+    const cards = [
+      {
+        tag: 'Intro',
+        question: 'Can you tell me about yourself?',
+        pronunciation: 'Кэн ю тел ми эбаут йорселф?',
+        translation: 'Расскажите о себе.',
+        short: 'I am a PPC specialist with over 10 years of experience in digital marketing. My main focus is Google Ads, e-commerce, lead generation, GA4, GTM, Merchant Center, and conversion tracking. I have worked with more than 50 projects and managed monthly budgets of over $50,000.',
+        simple: 'I am a PPC specialist. I have 10+ years in digital marketing. I work mostly with Google Ads, tracking, e-commerce, and lead generation. I like improving CPA, ROAS, and wasted spend.',
+        simplePronunciation: 'Ай эм э пи-пи-си спешэлист. Ай хэв тен плюс йирз ин диджитал маркетинг. Ай уорк моустли уиз Гугл Эдз, трэкинг, и-коммерс, энд лид дженэрэйшн. Ай лайк импрувинг си-пи-эй, роас, энд уэйстэд спенд.',
+        simpleTranslation: 'Я PPC-специалист. У меня 10+ лет опыта в digital marketing. В основном я работаю с Google Ads, tracking, e-commerce и lead generation. Мне нравится улучшать CPA, ROAS и снижать неэффективные расходы.',
+        keywords: ['10+ years', 'Google Ads', 'GA4', 'GTM', 'e-commerce', '$50k+ budgets']
+      },
+      {
+        tag: 'Motivation',
+        question: 'Why are you interested in this role?',
+        pronunciation: 'Уай ар ю интэрэстэд ин зис роул?',
+        translation: 'Почему вам интересна эта роль?',
+        short: 'This role is interesting for me because it combines technical PPC work and business results. I like working with Google Ads, tracking, feeds, and account structure. I also like roles where I can find problems, test ideas, and improve performance step by step.',
+        simple: 'I like this role because it is practical and technical. I can use my Google Ads experience, improve tracking, clean the account structure, and help the business get better results.',
+        simplePronunciation: 'Ай лайк зис роул бикоз ит из прэктикэл энд техникэл. Ай кэн юз май Гугл Эдз экспириэнс, импрув трэкинг, клин зи эккаунт стракчэр, энд хэлп зэ бизнес гэт бэтэр ризалтс.',
+        simpleTranslation: 'Мне интересна эта роль, потому что она практичная и техническая. Я могу использовать свой опыт в Google Ads, улучшать tracking, приводить структуру аккаунта в порядок и помогать бизнесу получать лучшие результаты.',
+        keywords: ['technical PPC', 'business results', 'tracking', 'feeds', 'testing']
+      },
+      {
+        tag: 'Google Ads',
+        question: 'What is your Google Ads experience?',
+        pronunciation: 'Уот из йор Гугл Эдз экспириэнс?',
+        translation: 'Какой у вас опыт в Google Ads?',
+        short: 'I have strong experience with Search, Shopping, Performance Max, DSA, and remarketing campaigns. I work with campaign structure, bidding, keywords, search terms, budgets, product performance, and conversion data. I have managed accounts for both e-commerce and B2B lead generation.',
+        simple: 'I work with Search, Shopping, PMax, and DSA. I check keywords, search terms, budgets, products, and conversions. My goal is to improve CPA, ROAS, and lead quality.',
+        simplePronunciation: 'Ай уорк уиз Сёрч, Шопинг, Пи-Макс, энд Ди-Эс-Эй. Ай чек киуордз, сёрч тёрмз, баджетс, продактс, энд конвёржэнз. Май гоул из ту импрув си-пи-эй, роас, энд лид куолити.',
+        simpleTranslation: 'Я работаю с Search, Shopping, PMax и DSA. Проверяю keywords, search terms, бюджеты, товары и конверсии. Моя цель - улучшать CPA, ROAS и качество лидов.',
+        keywords: ['Search', 'Shopping', 'PMax', 'DSA', 'CPA', 'ROAS']
+      },
+      {
+        tag: 'Tracking',
+        question: 'How do you work with GA4 and GTM?',
+        pronunciation: 'Хау ду ю уорк уиз Джи Эй Фор энд Джи Ти Эм?',
+        translation: 'Как вы работаете с GA4 и GTM?',
+        short: 'I use GA4 and GTM to set up and check conversions. I can work with purchase events, lead forms, calls, and custom events. Before optimization, I always check if the data is clean, because smart bidding depends on good conversion tracking.',
+        simple: 'I use GA4 and GTM for tracking. I check purchases, leads, calls, and custom events. For me, clean data is very important before making decisions in Google Ads.',
+        simplePronunciation: 'Ай юз Джи-Эй-Фор энд Джи-Ти-Эм фор трэкинг. Ай чек пёрчэсиз, лидз, колз, энд кастом ивентс. Фор ми, клин дэйта из вэри импортэнт бифор мэйкинг дисижэнз ин Гугл Эдз.',
+        simpleTranslation: 'Я использую GA4 и GTM для tracking. Проверяю покупки, лиды, звонки и custom events. Для меня чистые данные очень важны перед принятием решений в Google Ads.',
+        keywords: ['GA4', 'GTM', 'events', 'conversions', 'clean data']
+      },
+      {
+        tag: 'Feeds',
+        question: 'How do you work with Merchant Center and product feeds?',
+        pronunciation: 'Хау ду ю уорк уиз Мерчант Сентэр энд продакт фидз?',
+        translation: 'Как вы работаете с Merchant Center и товарными фидами?',
+        short: 'I check feed errors, product disapprovals, titles, descriptions, categories, prices, images, and availability. I improve product data so Shopping and Performance Max campaigns can understand the products better and bring more relevant traffic.',
+        simple: 'I check if the feed is healthy. I improve titles, categories, prices, images, and product data. A better feed usually means better Shopping and PMax performance.',
+        simplePronunciation: 'Ай чек иф зэ фид из хэлси. Ай импрув тайтлз, кэтигориз, прайсиз, имиджиз, энд продакт дэйта. Э бэтэр фид южуэли минз бэтэр Шопинг энд Пи-Макс пэрформэнс.',
+        simpleTranslation: 'Я проверяю, здоровый ли фид. Улучшаю titles, categories, prices, images и product data. Более качественный фид обычно дает лучшую работу Shopping и PMax.',
+        keywords: ['Merchant Center', 'feed errors', 'titles', 'categories', 'Shopping', 'PMax']
+      },
+      {
+        tag: 'PMax',
+        question: 'How do you approach Performance Max?',
+        pronunciation: 'Хау ду ю эпроуч Пэрформэнс Макс?',
+        translation: 'Как вы подходите к Performance Max?',
+        short: 'I do not just launch PMax and wait. First, I check tracking, feed quality, goals, budgets, asset groups, and audience signals. Then I analyze product performance, search insights, and conversion value. I also use PMax together with Search or Shopping when it makes sense.',
+        simple: 'For PMax, I start with tracking and feed quality. Then I check asset groups, audience signals, products, search insights, and budget. I test changes step by step.',
+        simplePronunciation: 'Фор Пи-Макс, ай старт уиз трэкинг энд фид куолити. Зэн ай чек эссет групс, одиэнс сигналз, продактс, сёрч инсайтс, энд баджет. Ай тэст чейнджиз стэп бай стэп.',
+        simpleTranslation: 'Для PMax я начинаю с tracking и качества фида. Потом проверяю asset groups, audience signals, товары, search insights и бюджет. Я тестирую изменения шаг за шагом.',
+        keywords: ['tracking', 'feed quality', 'asset groups', 'audience signals', 'search insights']
+      },
+      {
+        tag: 'Optimization',
+        question: 'How do you reduce wasted spend?',
+        pronunciation: 'Хау ду ю ридьюс уэйстэд спенд?',
+        translation: 'Как вы уменьшаете неэффективные расходы?',
+        short: 'I look for spend that does not bring value. I check search terms, low-performing products, locations, devices, audiences, landing pages, and bidding strategy. Then I reduce or exclude weak traffic and move budget to campaigns, products, or keywords that perform better.',
+        simple: 'I find where the money is wasted. I check search terms, products, locations, devices, and landing pages. Then I cut weak traffic and move budget to better areas.',
+        simplePronunciation: 'Ай файнд уэа зэ мани из уэйстэд. Ай чек сёрч тёрмз, продактс, лоукэйшэнз, дивайсиз, энд лэндинг пэйджиз. Зэн ай кат уик трафик энд мув баджет ту бэтэр эриаз.',
+        simpleTranslation: 'Я нахожу, где деньги тратятся неэффективно. Проверяю search terms, товары, гео, устройства и landing pages. Потом уменьшаю слабый трафик и переношу бюджет в более сильные зоны.',
+        keywords: ['search terms', 'bad products', 'locations', 'devices', 'budget shift']
+      },
+      {
+        tag: 'Case',
+        question: 'Tell me about one successful case.',
+        pronunciation: 'Тел ми эбаут уан саксэсфул кейс.',
+        translation: 'Расскажите об одном успешном кейсе.',
+        short: 'One good case was an e-commerce pet supplies project with around 2,500 SKUs. I worked with Performance Max, Shopping, and DSA campaigns. During the analyzed period, the account had around 34,923 tracked conversions, CPA was about 4.35 euro, and ROAS was around 800 to 1200 percent.',
+        simple: 'I had a pet supplies e-commerce case with 2,500 products. We used PMax, Shopping, and DSA. CPA was around 4.35 euro, ROAS was 800 to 1200 percent, and we tracked 34,923 conversions.',
+        simplePronunciation: 'Ай хэд э пет саплайз и-коммерс кейс уиз ту таузэнд файв хандред продактс. Уи юзд Пи-Макс, Шопинг, энд Ди-Эс-Эй. Си-пи-эй уоз эраунд фор пойнт сри файв юро, роас уоз эйт хандред ту твэлв хандред пэрсент, энд уи трэкт сёрти фор таузэнд найн хандред твэнти сри конвёржэнз.',
+        simpleTranslation: 'У меня был e-commerce кейс pet supplies с 2,500 товарами. Мы использовали PMax, Shopping и DSA. CPA был около 4.35 евро, ROAS был 800-1200%, и мы отследили 34,923 конверсии.',
+        keywords: ['pet supplies', '2,500 SKUs', 'PMax', 'Shopping', 'CPA 4.35 euro', 'ROAS 800-1200%']
+      },
+      {
+        tag: 'Strengths',
+        question: 'What are your strengths?',
+        pronunciation: 'Уот ар йор стрэнгтс?',
+        translation: 'Какие у вас сильные стороны?',
+        short: 'My main strengths are technical PPC analysis, tracking, feed optimization, and wasted spend analysis. I can connect business goals with Google Ads data. I am also careful with details, especially when I work with conversion tracking and campaign structure.',
+        simple: 'My strengths are Google Ads analysis, tracking, feeds, and finding wasted spend. I am careful with data and I like practical optimization.',
+        simplePronunciation: 'Май стрэнгтс ар Гугл Эдз эналисис, трэкинг, фидз, энд файндинг уэйстэд спенд. Ай эм кэафул уиз дэйта энд ай лайк прэктикэл оптимайзэйшэн.',
+        simpleTranslation: 'Мои сильные стороны - анализ Google Ads, tracking, фиды и поиск неэффективных расходов. Я аккуратен с данными и люблю практичную оптимизацию.',
+        keywords: ['analysis', 'tracking', 'feeds', 'wasted spend', 'details']
+      },
+      {
+        tag: 'Weakness',
+        question: 'What are your weaknesses?',
+        pronunciation: 'Уот ар йор уикнэсиз?',
+        translation: 'Какие у вас слабые стороны?',
+        short: 'Sometimes I need a little more time to explain complex ideas in English. But I am improving, and I always focus on clear communication. I can also use written notes to make sure important details are accurate.',
+        simple: 'My spoken English is not perfect, especially with complex topics. But I am improving. I use simple words, clear examples, and notes to communicate accurately.',
+        simplePronunciation: 'Май споукэн Инглиш из нот пёрфект, испэшэли уиз комплекс топикс. Бат ай эм импрувинг. Ай юз симпл уордз, клиа игзамплз, энд ноутс ту комьюникэйт экьюрэтли.',
+        simpleTranslation: 'Мой разговорный английский не идеальный, особенно в сложных темах. Но я улучшаю его. Я использую простые слова, понятные примеры и заметки, чтобы общаться точно.',
+        keywords: ['English improving', 'clear words', 'notes', 'accuracy']
+      },
+      {
+        tag: 'Salary',
+        question: 'What salary range do you expect?',
+        pronunciation: 'Уот сэлэри рейндж ду ю экспэкт?',
+        translation: 'Какой диапазон зарплаты вы ожидаете?',
+        short: 'I am open to discussing it. I would like to understand the full scope of the role, the workload, and the level of responsibility first. Based on that, I am sure we can find a fair range.',
+        simple: 'I am open to discussion. First, I would like to understand the role, workload, and responsibility. Then we can agree on a fair range.',
+        simplePronunciation: 'Ай эм оупэн ту дискашэн. Фёрст, ай ууд лайк ту андэрстэнд зэ роул, уорклоуд, энд риспонсибилити. Зэн уи кэн эгри он э фэа рейндж.',
+        simpleTranslation: 'Я открыт к обсуждению. Сначала я хотел бы понять роль, нагрузку и уровень ответственности. Потом мы сможем договориться о справедливом диапазоне.',
+        keywords: ['open', 'scope', 'workload', 'responsibility', 'fair range']
+      },
+      {
+        tag: 'Questions',
+        question: 'Do you have questions for us?',
+        pronunciation: 'Ду ю хэв квэсчэнз фор ас?',
+        translation: 'У вас есть вопросы к нам?',
+        short: 'Yes, I have a few questions. What are the main goals for this role in the first three months? What are the biggest PPC challenges right now: tracking, ROAS, scaling, or lead quality? And how do you measure success for this position?',
+        simple: 'Yes. What are the main goals for the first three months? What is the biggest PPC problem now? And how do you measure success in this role?',
+        simplePronunciation: 'Йес. Уот ар зэ мэйн гоулз фор зэ фёрст сри манс? Уот из зэ бигэст пи-пи-си проблем нау? Энд хау ду ю мэжэр саксэс ин зис роул?',
+        simpleTranslation: 'Да. Какие главные цели на первые три месяца? Какая сейчас самая большая PPC-проблема? И как вы измеряете успех в этой роли?',
+        keywords: ['first 3 months', 'main challenge', 'tracking', 'ROAS', 'success']
+      },
+      {
+        tag: 'Help',
+        question: 'What can you say if you do not understand the question?',
+        pronunciation: 'Уот кэн ю сэй иф ю ду нот андэрстэнд зэ квэсчэн?',
+        translation: 'Что сказать, если вы не поняли вопрос?',
+        short: 'Could you repeat the question, please? Could you say it in a simpler way, please? Let me think for a few seconds. Do you mean my experience with setup or optimization?',
+        simple: 'Sorry, could you repeat that, please? Could you simplify the question? Let me think for a moment. Do you mean setup or optimization?',
+        simplePronunciation: 'Сори, куд ю рипит зэт, плиз? Куд ю симплифай зэ квэсчэн? Лет ми синк фор э моумэнт. Ду ю мин сетап ор оптимайзэйшэн?',
+        simpleTranslation: 'Извините, можете повторить, пожалуйста? Можете упростить вопрос? Дайте мне подумать момент. Вы имеете в виду настройку или оптимизацию?',
+        keywords: ['repeat', 'simplify', 'think', 'clarify']
+      }
+    ];
+
+    const cardsNode = document.querySelector('#cards');
+    const searchNode = document.querySelector('#search');
+    const emptyNode = document.querySelector('#empty');
+    const openAllNode = document.querySelector('#openAll');
+    const closeAllNode = document.querySelector('#closeAll');
+
+    function makeKeywords(items) {
+      return items.map((item) => `<li>${item}</li>`).join('');
+    }
+
+    function renderCards(list) {
+      cardsNode.innerHTML = list.map((card) => `
+        <article class="card" tabindex="0" role="button" data-index="${cards.indexOf(card)}" aria-expanded="false">
+          <div class="card-top">
+            <div class="meta">
+              <span class="tag">${card.tag}</span>
+              <span>Tap to open</span>
+            </div>
+            <h2 class="question">${card.question}</h2>
+            <p class="pronunciation"><strong>Pronunciation:</strong> ${card.pronunciation}</p>
+            <p class="translation"><strong>Translation:</strong> ${card.translation}</p>
+            <div class="voice-row" aria-label="Voice controls">
+              <button class="speak-btn primary" type="button" data-speak="question">Play question</button>
+              <button class="speak-btn" type="button" data-speak="answer">Play answer</button>
+              <button class="speak-btn stop" type="button" data-speak="stop">Stop</button>
+            </div>
+          </div>
+          <div class="answer">
+            <div>
+              <h2>Short answer</h2>
+              <p>${card.short}</p>
+            </div>
+            <div>
+              <h2>Simple speaking version</h2>
+              <p>${card.simple}</p>
+            </div>
+            <div>
+              <h2>Answer pronunciation</h2>
+              <p>${card.simplePronunciation}</p>
+            </div>
+            <div>
+              <h2>Answer translation</h2>
+              <p>${card.simpleTranslation}</p>
+            </div>
+            <div>
+              <h2>Keywords</h2>
+              <ul class="keywords">${makeKeywords(card.keywords)}</ul>
+            </div>
+          </div>
+        </article>
+      `).join('');
+      emptyNode.classList.toggle('is-visible', list.length === 0);
+    }
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) {
+        alert('Speech is not supported in this browser.');
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.88;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function filterCards() {
+      const query = searchNode.value.trim().toLowerCase();
+      const filtered = cards.filter((card) => {
+        return [
+          card.tag,
+          card.question,
+          card.translation,
+          card.short,
+          card.simple,
+          card.keywords.join(' ')
+        ].join(' ').toLowerCase().includes(query);
+      });
+
+      renderCards(filtered);
+    }
+
+    cardsNode.addEventListener('click', (event) => {
+      const card = event.target.closest('.card');
+      if (!card) return;
+
+      const speakButton = event.target.closest('[data-speak]');
+      if (speakButton) {
+        event.stopPropagation();
+        const cardData = cards[Number(card.dataset.index)];
+        const mode = speakButton.dataset.speak;
+
+        if (mode === 'stop') {
+          window.speechSynthesis.cancel();
+          return;
+        }
+
+        if (mode === 'question') {
+          speak(cardData.question);
+          return;
+        }
+
+        speak(cardData.simple);
+        return;
+      }
+
+      const isOpen = card.classList.toggle('is-open');
+      card.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    cardsNode.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.target.closest('[data-speak]')) return;
+      const card = event.target.closest('.card');
+      if (!card) return;
+      event.preventDefault();
+      const isOpen = card.classList.toggle('is-open');
+      card.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    searchNode.addEventListener('input', filterCards);
+
+    openAllNode.addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach((card) => {
+        card.classList.add('is-open');
+        card.setAttribute('aria-expanded', 'true');
+      });
+    });
+
+    closeAllNode.addEventListener('click', () => {
+      document.querySelectorAll('.card').forEach((card) => {
+        card.classList.remove('is-open');
+        card.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    renderCards(cards);
+  </script>
+</body>
+</html>
